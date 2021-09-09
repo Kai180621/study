@@ -1,0 +1,29 @@
+@domain = http://symfony.localhost
+
+### Hello World
+GET {{domain}} HTTP/1.1
+content-type: application/json 
+
+### 商品取得(REST）
+GET {{domain}}/shopify/products HTTP/1.1
+content-type: application/json
+
+### 商品取得(GraphQL）
+GET {{domain}}/shopify/gql/products HTTP/1.1
+content-type: application/json
+
+### 商品注文（REST）
+POST {{domain}}/shopify/orders HTTP/1.1
+content-type: application/json
+
+### 商品注文（GRAPHQL）
+POST {{domain}}/shopify/gql/orders HTTP/1.1
+content-type: application/json
+
+### 内部非同期：　商品注文（10件）
+POST {{domain}}/shopify/many_orders_async HTTP/1.1
+content-type: application/json
+
+### 内部同期：　商品注文（10件）
+POST {{domain}}/shopify/many_orders_sync HTTP/1.1
+content-type: application/json
