@@ -2,6 +2,7 @@ version: "3.9"
 volumes:
   php-fpm-socket:
   db-store:
+  cache-store:
   psysh-store:
 services:
   app:
@@ -29,6 +30,9 @@ services:
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=null
+      - REDIS_PORT=6379
 
   web:
     build:
@@ -69,3 +73,14 @@ services:
       - MYSQL_USER=${DB_USER:-phper}
       - MYSQL_PASSWORD=${DB_PASS:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+  
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+        - type: volume
+          source: cache-store
+          target: /data/redis
+          volume:
+            nocopy: true
